@@ -1,10 +1,10 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { Search } from '@element-plus/icons-vue'
-import { getKillerSkillListService, getKillerByIdService } from '@/api/killer'
+import { getPropListService, getPropTypeByIdService } from '@/api/prop'
 import defaultAvatar from '@/assets/avatar.jpg'
-import OwnerSelect from './components/OwnerSelect.vue'
-import DetailsDialog from './components/SkillDetails.vue'
+import PropDetailsDialog from './components/PropDetailsDialog.vue'
+import PropTypeSelect from './components/PropTypeSelect.vue'
 
 const total = ref(0)
 const dataList = ref([]) // 数据列表
@@ -14,13 +14,19 @@ const params = ref({
   page: 1,
   pageSize: 20,
   name: '',
-  killerId: null
+  quality: null,
+  typeId: null
 })
 
-// 检测param.killerId变化
+// 检测param.typeId变化
 watch(
-  () => params.value.killerId,
-  (newValue) => console.log('killerId发生了变化', newValue)
+  () => params.value.typeId,
+  (newValue) => console.log('typeId发生了变化', newValue)
+)
+// 检测param.quality变化
+watch(
+  () => params.value.quality,
+  (newValue) => console.log('quality发生了变化', newValue)
 )
 
 const showCover = (e) => {
@@ -45,25 +51,25 @@ const notShowCover = (e) => {
 
 // 跳转详情页
 const jumpDetails = (item) => {
-  console.log('jumpDetails')
+  console.log('jumpDetails', typeof item.quality)
   detailsDialog.value.open(item)
 }
 
 // 获取数据列表
-const getKillerSkillList = async () => {
-  console.log('getKillerSkillList')
-  const res = await getKillerSkillListService(params.value)
+const getPropListList = async () => {
+  console.log('getPropListList')
+  const res = await getPropListService(params.value)
   console.log(res.data.data)
   dataList.value = res.data.data.rows
   dataList.value.forEach(async (item) => {
-    // 获取所有者姓名
-    // console.log(item) // 杀手对象
-    const res = await getKillerByIdService(item.killerId)
+    // 获取种类名
+    // console.log(item) // 道具种类对象
+    const res = await getPropTypeByIdService(item.typeId)
     // console.log(res)
     if (res.data.data !== null) {
-      item.killerName = res.data.data.name
+      item.typeName = res.data.data.type
     } else {
-      item.killerName = '通用技能'
+      item.typeName = '未知'
     }
   })
   // console.log('dataList', dataList.value)
@@ -74,7 +80,7 @@ const getKillerSkillList = async () => {
 const search = async () => {
   console.log('search')
   params.value.page = 1 // 重置页面
-  getKillerSkillList()
+  getPropListList()
 }
 
 // 处理分页逻辑
@@ -85,7 +91,7 @@ const handleSizeChange = (size) => {
   params.value.page = 1
   params.value.pageSize = size // 已经双向绑定了(可不写)
   // 基于最新数据发请求拿新数据渲染
-  getKillerSkillList()
+  getPropListList()
 }
 
 // 当前页变化时
@@ -93,44 +99,86 @@ const handleCurrentChange = (page) => {
   // console.log('当前页', page)
   params.value.page = page // 已经双向绑定了(可不写)
   // 基于最新数据发请求拿新数据渲染
-  getKillerSkillList()
+  getPropListList()
 }
 
+// 选择盒子阴影
+const chooseBoxShadow = ({ quality }) => {
+  // console.log('chooseBoxShadow')
+  // console.log(item)
+  let boxShadow
+  switch (quality) {
+    case '0':
+      boxShadow = '0 0 20px #000000'
+      break
+    case '1':
+      boxShadow = '0 0 20px #ffde59'
+      break
+    case '2':
+      boxShadow = '0 0 20px #09c502'
+      break
+    case '3':
+      boxShadow = '0 0 20px #cc6ce7'
+      break
+    case '4':
+      boxShadow = '0 0 20px #e4080a'
+      break
+    case '5':
+      boxShadow = '0 0 20px #fe9900'
+      break
+  }
+
+  return { boxShadow }
+}
 // created
-getKillerSkillList()
+getPropListList()
 </script>
 
 <template>
-  <div class="skill-killer-page">
+  <div class="prop-page">
     <div class="header">
       <div class="text">
-        <h1 style="font-size: 42px">杀手技能介绍</h1>
+        <h1 style="font-size: 42px">道具介绍</h1>
         <p>
-          每个角色都有三个传承技能，每场游戏每个玩家可以最多携带四个技能，在下面探索
-          Dead by Daylight 的完整技能名单。
+          在黎明杀机中，每名逃生者都可以携带一个道具进入游戏，游戏中通过箱子之类的途径也可以获取手持道具，在下面探索
+          Dead by Daylight 的完整逃生者手持道具名单。
         </p>
         <div class="search">
           <div class="search-item">
-            <label for="name">搜索技能名</label>
+            <label for="name">搜索道具名</label>
             <input
               type="text"
               id="name"
               v-model="params.name"
-              placeholder="请输入技能名"
+              placeholder="请输入道具名"
               maxlength="12"
               @blur="search"
             />
             <el-icon @click="search"><Search /></el-icon>
           </div>
           <div class="search-item">
-            <label for="identity">所有者</label>
+            <label for="identity">道具种类</label>
             <!-- Vue3 => v-model 是 :modelValue 和 @update:modelValue 的简写 -->
-            <OwnerSelect
-              v-model="params.killerId"
-              ownerList="killer"
-              width="220px"
+            <PropTypeSelect
+              v-model="params.typeId"
               @update:modelValue="search"
-            ></OwnerSelect>
+            ></PropTypeSelect>
+          </div>
+        </div>
+        <div class="search">
+          <div class="search-item">
+            <label for="identity">道具品质</label>
+            <!-- Vue3 => v-model 是 :modelValue 和 @update:modelValue 的简写 -->
+            <select v-model="params.quality" @change="search">
+              <!-- label是展示给用户看的，value是提交给后台的值 -->
+              <option label="全部" :value="null"></option>
+              <option label="常见" value="0"></option>
+              <option label="不常见" value="1"></option>
+              <option label="稀少" value="2"></option>
+              <option label="罕见" value="3"></option>
+              <option label="超级罕见" value="4"></option>
+              <option label="活动" value="5"></option>
+            </select>
           </div>
         </div>
       </div>
@@ -147,11 +195,12 @@ getKillerSkillList()
           class="list-item"
           v-for="(item, index) in dataList"
           :key="index"
+          :style="chooseBoxShadow(item)"
         >
-          <img :src="item.imgurl || defaultAvatar" alt="" />
+          <img :src="item.image || defaultAvatar" alt="" />
           <div class="cover">
             <h3>{{ item.name }}</h3>
-            <p>{{ item.killerName }}</p>
+            <p>{{ item.typeName }}</p>
           </div>
           <span class="top-left"></span>
           <span class="bottom-right"></span>
@@ -185,12 +234,12 @@ getKillerSkillList()
       />
     </div>
     <!-- 弹窗组件 -->
-    <DetailsDialog ref="detailsDialog"></DetailsDialog>
+    <PropDetailsDialog ref="detailsDialog"></PropDetailsDialog>
   </div>
 </template>
 
 <style lang="less" scoped>
-.skill-killer-page {
+.prop-page {
   padding-top: 100px;
   min-height: 1000px;
   // 渐变色
@@ -257,6 +306,40 @@ getKillerSkillList()
             border-radius: 10px;
             cursor: pointer;
           }
+          select {
+            width: 220px;
+            height: 40px;
+            font-size: 16px;
+            /* 边框 */
+            border: 3px solid #ccc;
+            /* 透明色 */
+            background-color: transparent;
+            /* 去掉焦点框 */
+            outline: 0;
+            border-radius: 10px;
+            transition: all 1s;
+            color: #fff;
+            cursor: pointer;
+            &:hover {
+              cursor: pointer;
+            }
+            // 媒体查询，宽度小于1200px
+            @media screen and (max-width: 1200px) {
+              width: 200px;
+            }
+            // 媒体查询，宽度小于992px
+            @media screen and (max-width: 992px) {
+              width: 160px;
+            }
+            option {
+              color: black;
+              &:checked {
+                background-color: #e6e6e6;
+                color: rgb(98, 197, 251);
+                font-weight: 700;
+              }
+            }
+          }
         }
       }
     }
@@ -290,7 +373,7 @@ getKillerSkillList()
         // background-color: pink;
         background-color: #1a1a1a;
         // 阴影
-        box-shadow: 0 0 20px #ff0505;
+        box-shadow: 0 0 20px #000000;
         border-radius: 10px;
         display: flex;
         flex-direction: column;

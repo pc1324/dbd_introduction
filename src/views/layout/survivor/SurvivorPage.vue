@@ -170,6 +170,14 @@ getSurvivorList()
             &:focus {
               border: 3px solid #2eb7ed;
             }
+            // 媒体查询，宽度小于1200px
+            @media screen and (max-width: 1200px) {
+              width: 200px;
+            }
+            // 媒体查询，宽度小于992px
+            @media screen and (max-width: 992px) {
+              width: 160px;
+            }
           }
           .el-icon {
             position: absolute;

@@ -6,8 +6,8 @@ import {
   getSurvivorByIdService
 } from '@/api/survivor'
 import defaultAvatar from '@/assets/avatar.jpg'
-import OwnerSelect from './component/OwnerSelect.vue'
-import DetailsDialog from './component/SkillDetails.vue'
+import OwnerSelect from './components/OwnerSelect.vue'
+import DetailsDialog from './components/SkillDetails.vue'
 
 const total = ref(0)
 const dataList = ref([]) // 数据列表
@@ -240,6 +240,14 @@ getSurvivorSkillList()
             }
             &:focus {
               border: 3px solid #2eb7ed;
+            }
+            // 媒体查询，宽度小于1200px
+            @media screen and (max-width: 1200px) {
+              width: 200px;
+            }
+            // 媒体查询，宽度小于992px
+            @media screen and (max-width: 992px) {
+              width: 160px;
             }
           }
           .el-icon {

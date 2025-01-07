@@ -63,8 +63,6 @@ getAllKiller()
   <select
     :modelValue="modelValue"
     @change="emit('update:modelValue', $event.target.value)"
-    :style="{ width }"
-    size="large"
   >
     <!-- label是展示给用户看的，value是提交给后台的值 -->
     <option
@@ -93,6 +91,14 @@ select {
   cursor: pointer;
   &:hover {
     cursor: pointer;
+  }
+  // 媒体查询，宽度小于1200px
+  @media screen and (max-width: 1200px) {
+    width: 200px;
+  }
+  // 媒体查询，宽度小于992px
+  @media screen and (max-width: 992px) {
+    width: 160px;
   }
   option {
     color: black;

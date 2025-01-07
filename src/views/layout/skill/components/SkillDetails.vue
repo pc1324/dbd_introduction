@@ -38,7 +38,7 @@ defineExpose({
 
 <template>
   <div ref="dialog" class="details-shadow">
-    <div class="details-dialog" style="width: 60%">
+    <div class="details-dialog" style="width: 40%">
       <div class="dialog-header">
         <slot name="header">
           <el-icon @click="close"><CloseBold /></el-icon>

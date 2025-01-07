@@ -106,13 +106,30 @@ const routes = [
         path: '/killer/details',
         component: () => import('@/views/layout/killer/KillerDetailsPage.vue')
       },
+      // 逃生者技能（二级路由）
       {
         path: '/skill/survivor',
         component: () => import('@/views/layout/skill/SurvivorSkill.vue')
       },
+      // 杀手技能（二级路由）
       {
         path: '/skill/killer',
         component: () => import('@/views/layout/skill/KillerSkill.vue')
+      },
+      // 道具（二级路由）
+      {
+        path: '/prop',
+        component: () => import('@/views/layout/prop/PropPage.vue')
+      },
+      // 地图（二级路由）
+      {
+        path: '/map',
+        component: () => import('@/views/layout/map/MapPage.vue')
+      },
+      // 祭品（二级路由）
+      {
+        path: '/offer',
+        component: () => import('@/views/layout/offer/OfferPage.vue')
       }
     ]
   },
