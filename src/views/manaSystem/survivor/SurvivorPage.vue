@@ -94,7 +94,7 @@ const handleSelectionChange = (selection) => {
 const onSuccess = (type) => {
   if (type === 'add') {
     // 如果是添加，最好渲染最后一页
-    const lastPage = Math.ceil((total.value + 1) / params.value.pagesize)
+    const lastPage = Math.ceil((total.value + 1) / params.value.pageSize)
     // 更新成最大页码，再渲染
     params.value.page = lastPage
   }

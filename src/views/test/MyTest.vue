@@ -3,7 +3,6 @@ import { adminLoginService, getUserListService } from '@/api/user.js'
 import { checkUserNameService } from '@/api/user.js'
 import { testService } from '@/api/test'
 import { useUserStore } from '@/stores'
-
 // 登录
 const login = async () => {
   const res = await adminLoginService({
@@ -39,6 +38,8 @@ const test2 = async () => {
     console.error('error', error)
   }
 }
+
+// created
 </script>
 
 <template>

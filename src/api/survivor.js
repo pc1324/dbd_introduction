@@ -20,6 +20,15 @@ export const getSurvivorByIdService = (id) => {
   return request.get(`/survivor/${id}`)
 }
 
+// 根据名称查询逃生者
+export const getSurvivorByNameService = (name) => {
+  return request.get('/survivor/name', {
+    params: {
+      name
+    }
+  })
+}
+
 // 新增逃生者
 // 注意：data需要是formData格式
 export const addSurvivorService = (data) => {

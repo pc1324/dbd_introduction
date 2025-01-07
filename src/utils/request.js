@@ -36,6 +36,9 @@ request.interceptors.response.use(
     }
     // 处理业务失败
     ElMessage.error(response.data.msg || '服务异常')
+    if (response.data.code === 401) {
+      router.push('/login')
+    }
     return Promise.reject(response.data)
   },
   (error) => {

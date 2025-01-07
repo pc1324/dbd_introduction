@@ -20,6 +20,13 @@ export const getKillerByIdService = (id) => {
   return request.get(`/killer/${id}`)
 }
 
+// 根据条件查询杀手
+export const getKillerByConditionService = (params) => {
+  return request.get('/killer/condition', {
+    params
+  })
+}
+
 // 新增杀手
 // 注意：data需要是formData格式
 export const addKillerService = (data) => {

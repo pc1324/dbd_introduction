@@ -51,8 +51,6 @@ const handleCommand = async (key) => {
         class="el-menu-vertical-demo"
         :default-active="$route.path"
         text-color="#fff"
-        @open="handleOpen"
-        @close="handleClose"
         router
       >
         <el-menu-item index="/manaSystem/welcome">
