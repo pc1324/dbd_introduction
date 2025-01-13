@@ -30,3 +30,8 @@ export const updateOfferService = (data) => {
 export const deleteOfferService = (ids) => {
   return request.delete(`/admin/offer/delete/${ids}`)
 }
+
+// 祭品名校验
+export const checkOfferByNameService = (name) => {
+  return request.get(`/offer/check/name/${name}`)
+}

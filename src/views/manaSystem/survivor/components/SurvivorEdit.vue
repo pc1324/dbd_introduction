@@ -4,7 +4,8 @@ import { Plus } from '@element-plus/icons-vue'
 import {
   getSurvivorByIdService,
   addSurvivorService,
-  updateSurvivorService
+  updateSurvivorService,
+  checkSurvivorByNameService
 } from '@/api/survivor'
 
 // 富文本编辑器工具栏
@@ -28,8 +29,26 @@ const visibleDrawer = ref(false)
 const form = ref()
 
 // 表单验证规则
-const rules = {}
-
+const rules = {
+  name: [
+    { required: true, message: '请输入逃生者名', trigger: 'blur' },
+    { min: 1, max: 20, message: '角色名必须是1-20位的字符', trigger: 'blur' },
+    {
+      validator: async (rule, value, callback) => {
+        //  判断 value 和 当前 form 中收集的 password 是否一致
+        try {
+          const res = await checkSurvivorByNameService(value)
+          console.log(res.data)
+          callback()
+        } catch (e) {
+          console.log(e)
+          callback(new Error(e.msg))
+        }
+      },
+      trigger: 'blur'
+    }
+  ]
+}
 // 默认数据
 const defaultForm = {
   name: '',

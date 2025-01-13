@@ -4,7 +4,9 @@ import { Plus } from '@element-plus/icons-vue'
 import {
   getUserByIdService,
   updateUserService,
-  addUserService
+  addUserService,
+  checkUserNameService,
+  checkEmailService
 } from '@/api/user'
 
 // 控制抽屉显示隐藏
@@ -17,7 +19,21 @@ const form = ref()
 const rules = {
   username: [
     { required: true, message: '请输入用户名', trigger: 'blur' },
-    { min: 2, max: 10, message: '用户名必须是2-10位的字符', trigger: 'blur' }
+    { min: 2, max: 10, message: '用户名必须是2-10位的字符', trigger: 'blur' },
+    {
+      validator: async (rule, value, callback) => {
+        //  判断 value 和 当前 form 中收集的 password 是否一致
+        try {
+          const res = await checkUserNameService(value)
+          console.log(res.data)
+          callback()
+        } catch (e) {
+          console.log(e)
+          callback(new Error(e.msg))
+        }
+      },
+      trigger: 'blur'
+    }
   ],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
@@ -41,11 +57,33 @@ const rules = {
       trigger: 'blur'
     }
   ],
+  phone: [
+    { required: true, message: '请输入手机号', trigger: 'blur' },
+    {
+      pattern: /^1[3-9]\d{9}$/,
+      message: '手机号格式不正确，请检查输入内容',
+      trigger: 'blur'
+    }
+  ],
   email: [
     { required: true, message: '请输入邮箱', trigger: 'blur' },
     {
       pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
       message: '邮箱格式不正确，请检查输入内容',
+      trigger: 'blur'
+    },
+    {
+      validator: async (rule, value, callback) => {
+        //  判断 value 和 当前 form 中收集的 password 是否一致
+        try {
+          const res = await checkEmailService(value)
+          console.log(res.data)
+          callback()
+        } catch (e) {
+          console.log(e)
+          callback(new Error(e.msg))
+        }
+      },
       trigger: 'blur'
     }
   ]
@@ -176,7 +214,7 @@ defineExpose({
           <el-option label="女" value="1"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="手机号">
+      <el-form-item label="手机号" prop="phone">
         <el-input
           v-model="formModel.phone"
           placeholder="请输入手机号"

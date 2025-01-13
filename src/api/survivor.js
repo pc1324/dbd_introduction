@@ -75,3 +75,13 @@ export const updateSkillService = (data) => {
 export const deleteSkillService = (ids) => {
   return request.delete(`/admin/skill/survivor/delete/${ids}`)
 }
+
+// 校验逃生者姓名是否重复
+export const checkSurvivorByNameService = (name) => {
+  return request.get(`/survivor/check/name/${name}`)
+}
+
+// 检验逃生者技能是否重复
+export const checkSurvivorSkillByName = (name) => {
+  return request.get(`/skill/survivor/check/name/${name}`)
+}

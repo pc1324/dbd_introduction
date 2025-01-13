@@ -4,7 +4,8 @@ import { Plus } from '@element-plus/icons-vue'
 import {
   getSkillByIdService,
   addSkillService,
-  updateSkillService
+  updateSkillService,
+  checkSurvivorSkillByName
 } from '@/api/survivor'
 import OwnerSelect from './OwnerSelect.vue'
 
@@ -29,7 +30,27 @@ const visibleDrawer = ref(false)
 const form = ref({})
 
 // 表单验证规则
-const rules = {}
+const rules = {
+  name: [
+    { required: true, message: '请输入技能名', trigger: 'blur' },
+    { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
+    {
+      validator: async (rule, value, callback) => {
+        //  判断 value 和 当前 form 中收集的 password 是否一致
+        try {
+          const res = await checkSurvivorSkillByName(value)
+          console.log(res.data)
+          callback()
+        } catch (e) {
+          console.log(e)
+          callback(new Error(e.msg))
+        }
+      },
+      trigger: 'blur'
+    }
+  ],
+  survivorId: [{ required: true, message: '请选择逃生者', trigger: 'change' }]
+}
 
 // 默认数据
 const defaultForm = {
@@ -139,7 +160,7 @@ defineExpose({
           placeholder="请输入技能名"
         ></el-input>
       </el-form-item>
-      <el-form-item label="所属逃生者">
+      <el-form-item label="所属逃生者" prop="survivorId">
         <!-- Vue3 => v-model 是 :modelValue 和 @update:modelValue 的简写 -->
         <OwnerSelect
           v-model="formModel.survivorId"

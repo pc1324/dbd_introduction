@@ -103,6 +103,9 @@ const logout = async () => {
         <el-menu-item v-if="userStore.token" index="/user"
           >用户中心</el-menu-item
         >
+        <el-menu-item v-if="userStore.user.identity === '0'" index="/manaSystem"
+          >管理平台</el-menu-item
+        >
         <el-menu-item v-if="!userStore.token" index="/login">登录</el-menu-item>
         <el-menu-item v-else @click="logout">退出登录</el-menu-item>
       </el-sub-menu>

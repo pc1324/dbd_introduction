@@ -56,3 +56,8 @@ export const updatePropTypeService = (data) => {
 export const deletePropTypeService = (ids) => {
   return request.delete(`/admin/prop/type/delete/${ids}`)
 }
+
+// 根据道具名校验
+export const checkPropByNameService = (name) => {
+  return request.get(`/prop/check/name/${name}`)
+}

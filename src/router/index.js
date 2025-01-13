@@ -154,7 +154,9 @@ const noInterceptArr = [
   '/register',
   '/mytest',
   '/',
-  '/home'
+  '/home',
+  '/survivor',
+  '/killer'
 ]
 // 路由导航守卫：https://router.vuejs.org/zh/guide/advanced/navigation-guards.html
 // 根据返回值决定，是放行还是不放行

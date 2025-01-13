@@ -4,7 +4,10 @@ import { Plus } from '@element-plus/icons-vue'
 import {
   getKillerByIdService,
   addKillerService,
-  updateKillerService
+  updateKillerService,
+  checkKillerByNameService,
+  checkKillerByIdentityService,
+  checkKillerByAbilityNameService
 } from '@/api/killer'
 
 // 富文本编辑器工具栏
@@ -28,7 +31,70 @@ const visibleDrawer = ref(false)
 const form = ref()
 
 // 表单验证规则
-const rules = {}
+const rules = {
+  name: [
+    { required: true, message: '请输入杀手名', trigger: 'blur' },
+    { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' },
+    {
+      validator: async (rule, value, callback) => {
+        //  判断 value 和 当前 form 中收集的 password 是否一致
+        try {
+          const res = await checkKillerByNameService(value)
+          console.log(res.data)
+          callback()
+        } catch (e) {
+          console.log(e)
+          callback(new Error(e.msg))
+        }
+      },
+      trigger: 'blur'
+    }
+  ],
+  identity: [
+    { required: true, message: '请输入身份', trigger: 'blur' },
+    { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' },
+    {
+      validator: async (rule, value, callback) => {
+        //  判断 value 和 当前 form 中收集的 password 是否一致
+        try {
+          const res = await checkKillerByIdentityService(value)
+          console.log(res.data)
+          callback()
+        } catch (e) {
+          console.log(e)
+          callback(new Error(e.msg))
+        }
+      },
+      trigger: 'blur'
+    }
+  ],
+  ability: [
+    { required: true, message: '请输入技能', trigger: 'blur' },
+    {
+      validator: async (rule, value, callback) => {
+        console.log(value)
+
+        if (value.name === '') {
+          callback(new Error('力量名不能为空'))
+        }
+        // value.name 应当在 1- 20 字符
+        if (value.name.length < 1 || value.name.length > 20) {
+          callback(new Error('长度在 1 到 20 个字符'))
+        }
+        //  判断 value 和 当前 form 中收集的 password 是否一致
+        try {
+          const res = await checkKillerByAbilityNameService(value.name)
+          console.log(res.data)
+          callback()
+        } catch (e) {
+          console.log(e)
+          callback(new Error(e.msg))
+        }
+      },
+      trigger: 'blur'
+    }
+  ]
+}
 
 // 默认数据
 const defaultForm = {
@@ -219,13 +285,13 @@ defineExpose({
         </div>
       </el-form-item>
       <!-- 关于杀手力量 -->
-      <el-form-item label="力量名" prop="ability.name">
+      <el-form-item label="力量名" prop="ability">
         <el-input
           v-model="formModel.ability.name"
           placeholder="请输入力量名"
         ></el-input>
       </el-form-item>
-      <el-form-item label="力量图片" prop="ability.image">
+      <el-form-item label="力量图片">
         <!-- 此处需要关闭 element-plus自动上传，不需要配置 action 等参数 -->
         <!-- 只需要前端的本地预览即可，无需提交前上传图片 
               预览语法：URL.createObjectURL(文件对象) 创建本地预览的地址 -->

@@ -1,6 +1,7 @@
 <script setup>
 import {
   User,
+  HomeFilled,
   SwitchButton,
   CaretBottom,
   Aim,
@@ -33,9 +34,11 @@ const handleCommand = async (key) => {
     userStore.removeToken()
     userStore.setUser({})
     router.push('/adminLogin')
-  } else {
+  } else if (key === 'myInfo') {
     // 跳转操作
-    router.push(`/manaSystem/user/${key}`)
+    router.push(`/user`)
+  } else {
+    router.push(`/`)
   }
 }
 </script>
@@ -114,6 +117,9 @@ const handleCommand = async (key) => {
           <!-- 下拉部分 -->
           <template #dropdown>
             <el-dropdown-menu>
+              <el-dropdown-item command="home" :icon="HomeFilled"
+                >首页</el-dropdown-item
+              >
               <el-dropdown-item command="myInfo" :icon="User"
                 >我的信息</el-dropdown-item
               >

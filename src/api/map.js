@@ -35,3 +35,8 @@ export const updateMapService = (data) => {
 export const deleteMapService = (ids) => {
   return request.delete(`/admin/map/delete/${ids}`)
 }
+
+// 校验地图名
+export const checkMapByNameService = (name) => {
+  return request.get(`/map/check/name/${name}`)
+}

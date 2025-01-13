@@ -4,7 +4,8 @@ import { Plus } from '@element-plus/icons-vue'
 import {
   getOfferByIdService,
   addOfferService,
-  updateOfferService
+  updateOfferService,
+  checkOfferByNameService
 } from '@/api/offer'
 
 // 控制抽屉显示隐藏
@@ -14,9 +15,23 @@ const form = ref()
 
 // 表单验证规则
 const rules = {
-  username: [
-    { required: true, message: '请输入用户名', trigger: 'blur' },
-    { min: 2, max: 10, message: '用户名必须是2-10位的字符', trigger: 'blur' }
+  name: [
+    { required: true, message: '请输入祭品名', trigger: 'blur' },
+    { min: 2, max: 10, message: '祭品名必须是2-10位的字符', trigger: 'blur' },
+    {
+      validator: async (rule, value, callback) => {
+        //  判断 value 和 当前 form 中收集的 password 是否一致
+        try {
+          const res = await checkOfferByNameService(value)
+          console.log(res.data)
+          callback()
+        } catch (e) {
+          console.log(e)
+          callback(new Error(e.msg))
+        }
+      },
+      trigger: 'blur'
+    }
   ],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },

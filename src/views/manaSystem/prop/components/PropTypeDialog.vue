@@ -22,7 +22,19 @@ const params = ref({
 const defaultParams = {
   type: ''
 }
-
+// params.value.type不为''时候解除按钮禁用，否则禁用
+const submitFlag = ref(true)
+watch(
+  () => params.value.type,
+  (newValue) => {
+    if (newValue !== '') {
+      submitFlag.value = false
+    } else {
+      submitFlag.value = true
+    }
+    console.log('submitFlag', submitFlag.value)
+  }
+)
 // 获取多选选择的ID
 const handleSelectionChange = (selection) => {
   selectedIds.value = selection.map((row) => row.id)
@@ -182,7 +194,7 @@ getAllPropType()
           <el-input v-model="params.type" placeholder="请输入道具种类" />
         </el-form-item>
         <el-form-item>
-          <el-button @click="onSubmit">确定</el-button>
+          <el-button :disabled="submitFlag" @click="onSubmit">确定</el-button>
         </el-form-item>
       </el-form>
     </div>

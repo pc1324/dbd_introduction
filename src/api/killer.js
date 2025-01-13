@@ -73,3 +73,22 @@ export const updateKillerSkillService = (data) => {
 export const deleteKillerSkillService = (ids) => {
   return request.delete(`/admin/skill/killer/delete/${ids}`)
 }
+
+// 校验杀手姓名是否重复
+export const checkKillerByNameService = (name) => {
+  return request.get(`/killer/check/name/${name}`)
+}
+
+// 校验杀手身份是否重复
+export const checkKillerByIdentityService = (identity) => {
+  return request.get(`/killer/check/identity/${identity}`)
+}
+// 校验杀手力量名是否重复
+export const checkKillerByAbilityNameService = (name) => {
+  return request.get(`/ability/check/name/${name}`)
+}
+
+// 检验杀手技能名是否重复
+export const checkKillerSkillByName = (name) => {
+  return request.get(`/skill/killer/check/name/${name}`)
+}
