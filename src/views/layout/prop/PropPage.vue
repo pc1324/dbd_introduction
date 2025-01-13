@@ -172,11 +172,11 @@ getPropListList()
             <select v-model="params.quality" @change="search">
               <!-- label是展示给用户看的，value是提交给后台的值 -->
               <option label="全部" :value="null"></option>
-              <option label="常见" value="0"></option>
-              <option label="不常见" value="1"></option>
-              <option label="稀少" value="2"></option>
-              <option label="罕见" value="3"></option>
-              <option label="超级罕见" value="4"></option>
+              <option label="普通" value="0"></option>
+              <option label="精良" value="1"></option>
+              <option label="稀有" value="2"></option>
+              <option label="非常稀有" value="3"></option>
+              <option label="超级稀有" value="4"></option>
               <option label="活动" value="5"></option>
             </select>
           </div>
@@ -243,13 +243,18 @@ getPropListList()
   padding-top: 100px;
   min-height: 1000px;
   // 渐变色
-  background: linear-gradient(to bottom, #737373, #1a1a1a);
+  // background: linear-gradient(to bottom, #737373, #1a1a1a);
+  // 背景图
+  background-color: #1a1a1a;
+  background-image: url(@/assets/background/background.jpg);
+  // 不重复
+  background-repeat: no-repeat;
   // 头部
   .header {
     display: flex;
     padding-left: 20px;
     width: 80%;
-    background-color: #b6b6b6;
+    // background-color: #b6b6b6;
     // background-image: url(@/assets/background/fog.gif);
     margin: 0 auto;
     height: 400px;

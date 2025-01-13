@@ -3,9 +3,10 @@ import { ref, computed, watch } from 'vue'
 import { useUserStore } from '@/stores'
 import defaultAvatar from '@/assets/default.png'
 import AudioCom from '@/components/audio/AudioCom.vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const userStore = useUserStore() // 使用仓库
+const router = useRouter()
 // 高亮路径相关
 const route = useRoute() // 使用路由对象
 const activeIndex = ref('') // 激活的菜单项索引
@@ -43,6 +44,7 @@ const logout = async () => {
   // 清除本地数据（token + user信息）
   userStore.removeToken()
   userStore.setUser({})
+  router.push('/login')
 }
 </script>
 
@@ -99,7 +101,7 @@ const logout = async () => {
           </div>
         </template>
         <el-menu-item v-if="userStore.token" index="/user"
-          >用户中心(暂无)</el-menu-item
+          >用户中心</el-menu-item
         >
         <el-menu-item v-if="!userStore.token" index="/login">登录</el-menu-item>
         <el-menu-item v-else @click="logout">退出登录</el-menu-item>

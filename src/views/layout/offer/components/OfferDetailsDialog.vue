@@ -54,37 +54,45 @@ defineExpose({
           </div>
           <div class="introduction">
             <span>种类：</span>
-            <span>{{ data.typeName }}</span>
+            <span>{{
+              data.offerType === '0'
+                ? '通用'
+                : data.offerType === '1'
+                ? '逃生者祭品'
+                : data.offerType === '2'
+                ? '杀手祭品'
+                : '未知'
+            }}</span>
             <br />
 
             <span>品质：</span>
             <span
-              v-if="data.quality === '0'"
+              v-if="data.quality === '普通'"
               style="color: #000000; font-weight: 700"
               >普通</span
             >
             <span
-              v-else-if="data.quality === '1'"
+              v-else-if="data.quality === '精良'"
               style="color: #ffde59; font-weight: 700"
               >精良</span
             >
             <span
-              v-else-if="data.quality === '2'"
+              v-else-if="data.quality === '稀有'"
               style="color: #09c502; font-weight: 700"
               >稀有</span
             >
             <span
-              v-else-if="data.quality === '3'"
+              v-else-if="data.quality === '非常稀有'"
               style="color: #cc6ce7; font-weight: 700"
               >非常稀有</span
             >
             <span
-              v-else-if="data.quality === '4'"
+              v-else-if="data.quality === '超级稀有'"
               style="color: #e4080a; font-weight: 700"
               >超级稀有</span
             >
             <span
-              v-else-if="data.quality === '5'"
+              v-else-if="data.quality === '活动'"
               style="color: #fe9900; font-weight: 700"
               >活动</span
             >

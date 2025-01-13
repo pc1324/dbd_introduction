@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useUserStore } from '@/stores'
 import router from '@/router'
 
-const baseURL = 'http://192.168.1.148:8080/'
+const baseURL = 'http://192.168.1.149:8080/'
 // 创建 axios 实例
 const request = axios.create({
   baseURL,

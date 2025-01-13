@@ -197,13 +197,18 @@ getSurvivorSkillList()
   padding-top: 100px;
   min-height: 1000px;
   // 渐变色
-  background: linear-gradient(to bottom, #737373, #1a1a1a);
+  // background: linear-gradient(to bottom, #737373, #1a1a1a);
+  // 背景图
+  background-color: #1a1a1a;
+  background-image: url(@/assets/background/background.jpg);
+  // 不重复
+  background-repeat: no-repeat;
   // 头部
   .header {
     display: flex;
     padding-left: 20px;
     width: 80%;
-    background-color: #b6b6b6;
+    // background-color: #b6b6b6;
     // background-image: url(@/assets/background/fog.gif);
     margin: 0 auto;
     height: 400px;

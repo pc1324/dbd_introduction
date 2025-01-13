@@ -53,44 +53,10 @@ defineExpose({
             <span>{{ data.name }}</span>
           </div>
           <div class="introduction">
-            <span>种类：</span>
-            <span>{{ data.typeName }}</span>
-            <br />
-
-            <span>品质：</span>
-            <span
-              v-if="data.quality === '0'"
-              style="color: #000000; font-weight: 700"
-              >普通</span
-            >
-            <span
-              v-else-if="data.quality === '1'"
-              style="color: #ffde59; font-weight: 700"
-              >精良</span
-            >
-            <span
-              v-else-if="data.quality === '2'"
-              style="color: #09c502; font-weight: 700"
-              >稀有</span
-            >
-            <span
-              v-else-if="data.quality === '3'"
-              style="color: #cc6ce7; font-weight: 700"
-              >非常稀有</span
-            >
-            <span
-              v-else-if="data.quality === '4'"
-              style="color: #e4080a; font-weight: 700"
-              >超级稀有</span
-            >
-            <span
-              v-else-if="data.quality === '5'"
-              style="color: #fe9900; font-weight: 700"
-              >活动</span
-            >
+            <span>系列：{{ data.series }}</span>
             <div class="content">
               <span
-                >道具介绍：
+                >地图介绍：
                 <div v-html="data.description"></div
               ></span>
             </div>
@@ -156,12 +122,12 @@ defineExpose({
         // height: 100%;
         // background-color: skyblue;
         .image {
-          width: 150px;
+          width: 300px;
           img {
             width: 100%;
             border: 3px solid #e5e5e5;
 
-            border-radius: 50%;
+            border-radius: 20px;
           }
         }
         span {

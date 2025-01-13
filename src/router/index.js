@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { useUserStore } from '@/stores'
 import { ElMessage } from 'element-plus'
+import { checkLoginService } from '@/api/user'
 // createRouter 创建路由实例
 // 配置路由模式（history:）
 // 1.history模式：createWebHistory 地址栏不带 #
@@ -130,6 +131,10 @@ const routes = [
       {
         path: '/offer',
         component: () => import('@/views/layout/offer/OfferPage.vue')
+      },
+      {
+        path: '/user',
+        component: () => import('@/views/layout/user/UserPage.vue')
       }
     ]
   },
@@ -159,7 +164,7 @@ const noInterceptArr = [
 // 3. 具体路径 或 路径对象，拦截到对应的地址
 // '/login' { name:'logon'}
 
-router.beforeEach((to) => {
+router.beforeEach(async (to) => {
   // console.log(to, from)
   // 如果没有 token，且访问的是非登录页，拦截到登录页
   const userStore = useUserStore()
@@ -172,6 +177,7 @@ router.beforeEach((to) => {
     ElMessage.error('请先登录')
     return '/login'
   }
+  // 已登录情况
   // 非管理员不能访问管理员页面
   if (
     userStore.user.identity !== '0' &&
@@ -179,6 +185,10 @@ router.beforeEach((to) => {
   ) {
     ElMessage.error('你不是管理员!')
     return '/adminLogin'
+  }
+  // 如果token过期，却还要访问需要登陆的页面
+  if (!noInterceptArr.includes(to.path)) {
+    checkLoginService()
   }
 })
 
