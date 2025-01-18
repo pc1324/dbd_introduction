@@ -112,7 +112,7 @@ getKillerById()
               >
                 <img :src="item.imgurl || defaultImage" alt="" />
                 <div class="cover">
-                  <h3>{{ item.name }}</h3>
+                  <h3>{{ item.name || '占位技能' }}</h3>
                 </div>
                 <span class="top-left"></span>
                 <span class="bottom-right"></span>
@@ -120,8 +120,8 @@ getKillerById()
             </div>
             <!-- 技能信息 -->
             <div ref="skillInfoRef" class="skill-info">
-              <h2 style="color: white">{{ skills[0].name }}</h2>
-              <div v-html="skills[0].content"></div>
+              <h2 style="color: white">{{ skills[0].name || '占位技能' }}</h2>
+              <div v-html="skills[0].content || '技能介绍'"></div>
             </div>
           </div>
           <!-- 右 -->
@@ -143,8 +143,11 @@ getKillerById()
             <h1>杀手力量</h1>
             <!-- 杀手力量信息 -->
             <div ref="abilityInfoRef" class="ability-info">
-              <h2 style="color: white">{{ ability.name }}</h2>
-              <div class="content" v-html="ability.description"></div>
+              <h2 style="color: white">{{ ability.name || '暂无力量' }}</h2>
+              <div
+                class="content"
+                v-html="ability.description || '暂无描述 '"
+              ></div>
             </div>
           </div>
           <div class="right">

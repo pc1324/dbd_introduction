@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { Search } from '@element-plus/icons-vue'
 import { getAllKillerService, getKillerByConditionService } from '@/api/killer'
-import defaultAvatar from '@/assets/avatar.jpg'
+import WaterBorder from './components/WaterBorder.vue'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 const dataList = ref([]) // 数据列表
@@ -11,26 +11,6 @@ const formModel = ref({
   name: '',
   identity: ''
 })
-
-const showCover = (e) => {
-  console.log('show')
-  // console.log(e.target.children[2])
-  e.target.children[1].style.opacity = 0.8
-  e.target.children[2].style.borderTop = '10px solid red'
-  e.target.children[2].style.borderLeft = '10px solid red'
-  e.target.children[3].style.borderBottom = '10px solid red'
-  e.target.children[3].style.borderRight = '10px solid red'
-}
-
-const notShowCover = (e) => {
-  console.log('notShow')
-  // console.log(e.target.children[2])
-  e.target.children[1].style.opacity = 0
-  e.target.children[2].style.borderTop = '0'
-  e.target.children[2].style.borderLeft = '0'
-  e.target.children[3].style.borderBottom = '0'
-  e.target.children[3].style.borderRight = '0'
-}
 
 const jumpDetails = (item) => {
   console.log('jumpDetails')
@@ -102,28 +82,12 @@ getKillerList()
     </div>
     <div class="body">
       <div class="list">
-        <div
-          @click="jumpDetails(item)"
-          @mouseenter="showCover"
-          @mouseleave="notShowCover"
-          class="list-item"
+        <WaterBorder
           v-for="(item, index) in dataList"
           :key="index"
-        >
-          <img :src="item.image || defaultAvatar" alt="" />
-          <div class="cover">
-            <h3>{{ item.name }}</h3>
-            <!-- // 超过50字符就省略+... -->
-            <p v-if="item.story.length > 100">
-              {{ item.story.slice(0, 100) }}...
-            </p>
-            <p v-else>
-              {{ item.story }}
-            </p>
-          </div>
-          <span class="top-left"></span>
-          <span class="bottom-right"></span>
-        </div>
+          :item="item"
+          :jumpDetails="jumpDetails"
+        ></WaterBorder>
         <!-- 补充div，为了最后一行靠左 -->
         <div style="width: 250px"></div>
         <div style="width: 250px"></div>

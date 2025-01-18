@@ -22,6 +22,10 @@ const rules = {
     { min: 2, max: 10, message: '用户名必须是2-10位的字符', trigger: 'blur' },
     {
       validator: async (rule, value, callback) => {
+        if (formModel.value.id) {
+          callback()
+          return
+        }
         //  判断 value 和 当前 form 中收集的 password 是否一致
         try {
           const res = await checkUserNameService(value)
@@ -74,6 +78,11 @@ const rules = {
     },
     {
       validator: async (rule, value, callback) => {
+        // 如果有id，则为修改，不用校验力量名字
+        if (formModel.value.id) {
+          callback()
+          return
+        }
         //  判断 value 和 当前 form 中收集的 password 是否一致
         try {
           const res = await checkEmailService(value)

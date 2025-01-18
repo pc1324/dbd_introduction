@@ -1,55 +1,42 @@
 <script setup>
-import { adminLoginService, getUserListService } from '@/api/user.js'
-import { checkUserNameService } from '@/api/user.js'
-import { testService } from '@/api/test'
-import { useUserStore } from '@/stores'
-// 登录
-const login = async () => {
-  const res = await adminLoginService({
-    username: '张三',
-    password: '123456'
+import WaterBorder from '@/views/layout/survivor/components/WaterBorder.vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const jumpDetails = (item) => {
+  console.log('jumpDetails')
+  router.push({
+    path: '/survivor/details',
+    query: {
+      id: item.id
+    }
   })
-  console.log(res)
-  ElMessage.success('登录成功')
-  // token
-  const userStore = useUserStore()
-  userStore.setToken(res.data.data)
 }
-
-const getUserList = async () => {
-  const res = await getUserListService()
-  console.log(res)
-}
-
-const test1 = async () => {
-  try {
-    const res = await testService('1417230756@qq.com')
-    console.log('res', res)
-  } catch (error) {
-    console.error('error', error)
-  }
-}
-
-const test2 = async () => {
-  try {
-    const res = await checkUserNameService('admin')
-    console.log('res', res)
-  } catch (error) {
-    console.error('error', error)
-  }
-}
-
 // created
 </script>
 
 <template>
-  <div>布局架子</div>
-  <button @click="login">测试登录</button>
-  <button @click="getUserList">测试数据</button>
-  <el-button type="primary" @click="test1">测试校验1</el-button>
-  <el-button type="primary" @click="test2">测试校验2</el-button>
-
-  <router-view></router-view>
+  <WaterBorder :jumpDetails="jumpDetails"></WaterBorder>
+  <!-- <div
+    @click="jumpDetails(item)"
+    @mouseenter="showCover"
+    @mouseleave="notShowCover"
+    class="list-item"
+    v-for="(item, index) in dataList"
+    :key="index"
+  >
+    <img :src="item.image || defaultAvatar" alt="" />
+    <div class="cover">
+      <h3>{{ item.name }}</h3>
+      <p v-if="item.story.length > 100">{{ item.story.slice(0, 100) }}...</p>
+      <p v-else>
+        {{ item.story }}
+      </p>
+    </div>
+    <span class="top-left"></span>
+    <span class="bottom-right"></span>
+  </div> -->
 </template>
 
 <style lang="less" scoped></style>

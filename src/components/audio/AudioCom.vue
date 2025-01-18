@@ -17,7 +17,7 @@ const stop = () => {
 // 改变播放状态
 const changeMuted = () => {
   playFlag.value = !playFlag.value
-  console.log(playFlag.value)
+  // console.log(playFlag.value)
 }
 
 watch(playFlag, (newValue) => {

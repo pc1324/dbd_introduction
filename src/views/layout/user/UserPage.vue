@@ -81,6 +81,7 @@ const updateUserInfo = async (attribute) => {
   // 更新用户信息请求
   await updateUserInfoService(fd)
   ElMessage.success('更新成功')
+  getUserInfo()
 }
 
 // 图片上传相关逻辑

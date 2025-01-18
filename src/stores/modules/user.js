@@ -19,7 +19,7 @@ export const useUserStore = defineStore(
     const user = ref({})
     const getUser = async () => {
       const res = await getUserInfoService() // 请求获取数据
-      console.log('已获取用户信息', res)
+      // console.log('已获取用户信息', res)
       user.value = res.data.data
     }
     const setUser = (obj) => {

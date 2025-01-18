@@ -37,6 +37,11 @@ const rules = {
     { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' },
     {
       validator: async (rule, value, callback) => {
+        // 如果有id，则为修改，不用这条校验
+        if (formModel.value.id) {
+          callback()
+          return
+        }
         //  判断 value 和 当前 form 中收集的 password 是否一致
         try {
           const res = await checkKillerByNameService(value)
@@ -55,6 +60,11 @@ const rules = {
     { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' },
     {
       validator: async (rule, value, callback) => {
+        // 如果有id，则为修改，不用这条校验
+        if (formModel.value.id) {
+          callback()
+          return
+        }
         //  判断 value 和 当前 form 中收集的 password 是否一致
         try {
           const res = await checkKillerByIdentityService(value)
@@ -80,6 +90,11 @@ const rules = {
         // value.name 应当在 1- 20 字符
         if (value.name.length < 1 || value.name.length > 20) {
           callback(new Error('长度在 1 到 20 个字符'))
+        }
+        // 如果有id，则为修改，不用校验力量名字
+        if (formModel.value.id) {
+          callback()
+          return
         }
         //  判断 value 和 当前 form 中收集的 password 是否一致
         try {

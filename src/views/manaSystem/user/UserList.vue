@@ -5,7 +5,10 @@ import { Edit, Delete } from '@element-plus/icons-vue'
 import { getUserListService, deleteUserService } from '@/api/user'
 import userAvator from '@/assets/default.png'
 import { formatTime } from '@/utils/format'
-
+import { useUserStore } from '@/stores'
+import { storeToRefs } from 'pinia'
+const userStore = useUserStore()
+const { user } = storeToRefs(userStore)
 const userListData = ref([]) // 用户列表数据
 const total = ref(0) // 用户总数
 const loading = ref(false) // 控制加载效果
@@ -210,6 +213,7 @@ getUserList()
             >
             </el-button>
             <el-button
+              v-if="user.username === 'admin'"
               :icon="Delete"
               circle
               type="danger"

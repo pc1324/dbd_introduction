@@ -46,6 +46,10 @@ const logout = async () => {
   userStore.setUser({})
   router.push('/login')
 }
+
+const logoLink = () => {
+  window.open('https://deadbydaylight.com/')
+}
 </script>
 
 <template>
@@ -64,6 +68,7 @@ const logout = async () => {
     >
       <el-menu-item class="logo">
         <img
+          @click="logoLink"
           style="height: 100%"
           src="@/assets/logo/dbd-logo(1).png"
           alt="黎明杀机logo"
@@ -117,14 +122,26 @@ const logout = async () => {
     <!-- 网页底部 -->
     <div class="footer">
       <div class="list">
-        <div>1</div>
-        <div>2</div>
-        <div>3</div>
-        <div>4</div>
+        <div class="list-item">
+          <img src="@/assets/威斯克缝合怪.jpg" alt="" />
+          <span>dbd_cloud</span>
+        </div>
+        <div class="list-item">
+          <img src="@/assets/default.png" alt="" />
+          <span>friend</span>
+        </div>
+        <div class="list-item">
+          <img src="@/assets/default.png" alt="" />
+          <span>friend</span>
+        </div>
+        <div class="list-item">
+          <img src="@/assets/default.png" alt="" />
+          <span>friend</span>
+        </div>
       </div>
       <p>
-        © 2024-2025 and pcloud、23433的植物 and other friends and dbd-logo from
-        Behaviour Interactive Inc. All rights reserved pcloud
+        © 2024-2025 and and other friends and dbd-logo from Behaviour
+        Interactive Inc. All rights reserved pcloud
       </p>
     </div>
   </div>
@@ -166,6 +183,7 @@ const logout = async () => {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  padding-top: 20px;
   width: 100%;
   height: 180px;
   color: #fff;
@@ -175,6 +193,21 @@ const logout = async () => {
     justify-content: space-around;
     align-items: center;
     height: 50px;
+    .list-item {
+      width: 120px;
+      height: 120px;
+      // background-color: skyblue;
+      text-align: center;
+      img {
+        width: 80%;
+        height: 80%;
+        border: 3px solid #666666;
+        border-radius: 50%;
+      }
+      span {
+        color: #fff;
+      }
+    }
   }
   p {
     text-align: center;

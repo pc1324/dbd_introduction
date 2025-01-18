@@ -23,15 +23,15 @@ const props = defineProps({
 // 返回顶部
 const backTop = () => {
   document.documentElement.scrollTop = 0
-  console.log(document.documentElement.scrollTop)
+  // console.log(document.documentElement.scrollTop)
 }
 
 // 前往某个盒子
 const goToBox = (offsetTop) => {
-  console.log('前往盒子：', offsetTop)
-  console.log('盒子距离顶部高度：', offsetTop)
+  // console.log('前往盒子：', offsetTop)
+  // console.log('盒子距离顶部高度：', offsetTop)
   document.documentElement.scrollTop = offsetTop
-  console.log('浏览器滚动高度距离', document.documentElement.scrollTop)
+  // console.log('浏览器滚动高度距离', document.documentElement.scrollTop)
 }
 
 // 电梯组件
@@ -44,8 +44,8 @@ const hidden = () => {
 const scrollHandler = () => {
   // 当页面滚动大于300px，就显示电梯导航
   const n = document.documentElement.scrollTop
-  console.log('页面滚动高度', n)
-  console.log('电梯组件', elevator.value)
+  // console.log('页面滚动高度', n)
+  // console.log('电梯组件', elevator.value)
   if (elevator.value) {
     elevator.value.style.opacity = n >= 300 ? 1 : 0
 
@@ -60,7 +60,7 @@ const scrollHandler = () => {
     const old = document.querySelector('.elevator-item .active')
     // 循环判断
     for (let i = 0; i < arr.length; i++) {
-      console.log('高度', arr[i])
+      // console.log('高度', arr[i])
 
       // 如果有下一个元素
       if (arr[i + 1]) {
@@ -91,12 +91,12 @@ const scrollHandler = () => {
 }
 
 onUnmounted(() => {
-  console.log('电梯组件onUnmounted')
+  // console.log('电梯组件onUnmounted')
   // 移除window的scroll事件
   window.removeEventListener('scroll', scrollHandler)
 })
 onMounted(() => {
-  console.log('电梯组件onMounted', props.itemInfo)
+  // console.log('电梯组件onMounted', props.itemInfo)
   nextTick(() => {
     // 确保 DOM 已经更新
     // 绑定页面滚动事件
@@ -104,7 +104,7 @@ onMounted(() => {
   }) // nextTick
 })
 // created
-console.log('电梯created', props.itemInfo)
+// console.log('电梯created', props.itemInfo)
 </script>
 
 <template>
